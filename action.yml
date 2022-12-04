@@ -59,6 +59,9 @@ inputs:
   copy-env-vars:
     description: 'Multiline list of pipeline environment variables to be copied over to the App Runner service environment'
     required: false
+  instance-role-arn:
+    description: 'ARN of IAM Role to be used as App Runner Instance ARN'
+    required: false
 outputs:
   service-id:
     description: 'App Runner service ID'
