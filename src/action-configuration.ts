@@ -34,6 +34,7 @@ export interface ICreateOrUpdateActionParams {
     cpu: number;
     memory: number;
     environment?: Record<string, string>;
+    instanceRoleArn?: string;
 }
 
 export type IActionParams = ICreateOrUpdateActionParams;
@@ -120,6 +121,8 @@ function getCreateOrUpdateConfig(): ICreateOrUpdateActionParams {
 
     const envVarNames = getMultilineInput('copy-env-vars', { required: false });
 
+    const instanceRoleArn = getInput('instance-role-arn', {required: false})
+
     return {
         action,
         serviceName,
@@ -131,6 +134,7 @@ function getCreateOrUpdateConfig(): ICreateOrUpdateActionParams {
         memory,
         sourceConfig: imageUri ? getImageConfig(imageUri) : getSourceCodeConfig(),
         environment: getEnvironmentVariables(envVarNames),
+        instanceRoleArn,
     };
 }
 
