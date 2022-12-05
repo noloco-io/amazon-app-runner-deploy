@@ -122,6 +122,17 @@ export async function createOrUpdateService(client: AppRunnerClient, config: IAc
     return validateAndExtractServiceInfo(config, service);
 }
 
+export async function deleteServiceAction(client: AppRunnerClient, config: IActionParams): Promise<void> {
+    const command = getDeleteCommand(config.arnToDelete || '');
+    const deleteServiceResponse = await client.send(command);
+
+    if(deleteServiceResponse?.Service?.ServiceName) {
+        info(`Deleted Service ${deleteServiceResponse.Service.ServiceName}`);
+    } else {
+        info(`Failed to Delete Service`);
+    }
+}
+
 async function describeService(client: AppRunnerClient, serviceArn: string): Promise<IExistingService> {
     const describeServiceResponse = await client.send(getDescribeCommand(serviceArn));
 

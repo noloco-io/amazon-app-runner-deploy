@@ -2,7 +2,12 @@ import { info, setFailed, setOutput } from "@actions/core";
 import { AppRunnerClient } from "@aws-sdk/client-apprunner";
 import { debug } from '@actions/core';
 import { getConfig } from "./action-configuration";
-import { createOrUpdateService, findExistingService, waitToStabilize } from "./action-helper-functions";
+import {
+    createOrUpdateService,
+    deleteServiceAction,
+    findExistingService,
+    waitToStabilize
+} from "./action-helper-functions";
 
 // GitHub action handler function
 export async function run(): Promise<void> {
@@ -13,6 +18,10 @@ export async function run(): Promise<void> {
 
         // AppRunner client
         const client = new AppRunnerClient({ region: config.region });
+
+        if(config.arnToDelete) {
+            return await deleteServiceAction(client,config);
+        }
 
         // Check whether service exists
         const existingService = await findExistingService(client, config.serviceName);

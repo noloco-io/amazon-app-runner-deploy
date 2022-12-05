@@ -35,6 +35,7 @@ export interface ICreateOrUpdateActionParams {
     memory: number;
     environment?: Record<string, string>;
     instanceRoleArn?: string;
+    arnToDelete?: string;
 }
 
 export type IActionParams = ICreateOrUpdateActionParams;
@@ -123,6 +124,8 @@ function getCreateOrUpdateConfig(): ICreateOrUpdateActionParams {
 
     const instanceRoleArn = getInput('instance-role-arn', {required: false})
 
+    const arnToDelete = getInput('arn-to-delete', {required: false})
+
     return {
         action,
         serviceName,
@@ -135,6 +138,7 @@ function getCreateOrUpdateConfig(): ICreateOrUpdateActionParams {
         sourceConfig: imageUri ? getImageConfig(imageUri) : getSourceCodeConfig(),
         environment: getEnvironmentVariables(envVarNames),
         instanceRoleArn,
+        arnToDelete
     };
 }
 

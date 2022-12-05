@@ -62,6 +62,9 @@ inputs:
   instance-role-arn:
     description: 'ARN of IAM Role to be used as App Runner Instance ARN'
     required: false
+  arn-to-delete:
+    description: 'If provided, the service referenced by this ARN will be deleted'
+    required: false
 outputs:
   service-id:
     description: 'App Runner service ID'
